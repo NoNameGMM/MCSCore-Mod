@@ -2,6 +2,7 @@ package me.nonamegmm.mcscore;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import net.minecraft.client.gui.screens.ChatScreen;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
@@ -24,14 +25,17 @@ public class ClientEvents {
     private static boolean isKKeyPressed = false;
     @SubscribeEvent
     public static void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (event.getKey() == KeyEvent.VK_B && !isKKeyPressed) {
-            Player player = Minecraft.getInstance().player;
-            sendChatMessage(player,"打开购买菜单");
-            sendPluginMessage(player);
-            isKKeyPressed = true;
-        }
-        else {
-            isKKeyPressed = false;
+        if (!(Minecraft.getInstance().screen instanceof ChatScreen)) {
+            if (event.getKey() == KeyEvent.VK_B && !isKKeyPressed) {
+
+                Player player = Minecraft.getInstance().player;
+                sendChatMessage(player,"打开购买菜单");
+                sendPluginMessage(player);
+                isKKeyPressed = true;
+            }
+            else {
+                isKKeyPressed = false;
+            }
         }
     }
 
